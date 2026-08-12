@@ -1,0 +1,88 @@
+@use 'variables';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: variables.$font-family;
+  background-color: variables.$bg-color;
+  color: variables.$text-primary;
+}
+
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+
+  .auth-card {
+    background: variables.$white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+      color: variables.$primary-color;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+      
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid variables.$border-color;
+        border-radius: 4px;
+        font-size: 16px;
+        
+        &:focus {
+          outline: none;
+          border-color: variables.$primary-color;
+        }
+      }
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background-color: variables.$primary-color;
+      color: variables.$white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      
+      &:hover {
+        background-color: darken(#f94f2f, 10%);
+      }
+    }
+
+    .toggle-text {
+      margin-top: 16px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: variables.$text-secondary;
+      
+      &:hover {
+        color: variables.$primary-color;
+      }
+    }
+  }
+}
