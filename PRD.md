@@ -6,7 +6,7 @@
 ## 2. 核心技術選型 (Tech Stack)
 - **架構設計**: Monorepo (Yarn Workspaces)，前後端及未來 App 皆置於同一倉儲，便於共享 TypeScript 型別與共用邏輯。
 - **前端 Web**: React + Vite (使用 TypeScript)
-- **前端樣式**: Vanilla SCSS (自建 Design System，嚴禁 inline-css，無 Tailwind)
+- **前端樣式**: Vanilla SCSS (自建 Design System，嚴禁使用任何 CSS 框架，嚴禁 inline-css，嚴格遵守只執行與撰寫 SCSS)
 - **未來行動端 App**: React Native (Expo)
 - **後端 API**: Node.js + NestJS (使用 TypeScript)
 - **資料庫**: PostgreSQL (適合處理電商複雜且關聯性高的交易與庫存資料)
@@ -32,7 +32,7 @@
 - **強制測試**: 任何新功能或 Bug 修復皆需經過 Mock Testing 驗證 (Jest / RTL)。
 - **自動化建置**: 程式碼修改後自動執行 `yarn build` 確保無編譯錯誤。
 - **API 文件**: 新增或修改 API 時，需同步更新 API 文件以便未來與 App 端交接。
-- **SCSS 規範**: 修改 SCSS 後，必須編譯輸出至對應的 CSS 檔案。禁止修改編譯後的產物與 inline CSS。
+- **SCSS 規範**: 嚴格禁止使用任何 CSS 框架。所有樣式必須透過編譯 SCSS 產生，修改 SCSS 後必須編譯輸出至對應的 CSS 檔案。禁止修改編譯後的產物與 inline CSS。
 - **Git 操作**: 遵守 `rtk` 指令規範，修改前 `rtk git pull`，建置成功後執行 `rtk git add/commit/push`。
 - **程式碼拆分**: 單一檔案超過 300 行時，強制抽離為共用元件或子元件。
 
