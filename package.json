@@ -1,0 +1,7 @@
+{
+  "name": "tapmall",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
