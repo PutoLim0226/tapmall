@@ -18,6 +18,7 @@ model User {
 
   stores    Store[]  // A user can own stores
   orders    Order[]  // A user can place orders
+  cartItems CartItem[] // Items in user's shopping cart
 }
 
 enum Role {
@@ -46,6 +47,8 @@ model Product {
   imageUrl    String?
   storeId     String
   store       Store    @relation(fields: [storeId], references: [id])
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -56,6 +59,7 @@ model Order {
   buyer       User        @relation(fields: [buyerId], references: [id])
   totalAmount Float
   status      OrderStatus @default(PENDING)
+  items       OrderItem[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
@@ -66,4 +70,25 @@ enum OrderStatus {
   SHIPPED
   COMPLETED
   CANCELLED
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
 }
