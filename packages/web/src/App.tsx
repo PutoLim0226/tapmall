@@ -1,16 +1,83 @@
 import { useState, useEffect } from 'react';
 
+function AdminDashboard({ setLoggedIn }: { setLoggedIn: (val: boolean) => void }) {
+  const [stats, setStats] = useState({ totalUsers: 0, totalProducts: 0, totalOrders: 0 });
+  const [users, setUsers] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/stats')
+      .then(res => res.json())
+      .then(data => setStats(data))
+      .catch(err => console.error(err));
+
+    fetch('/api/admin/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => console.error(err));
+  }, []);
+
+  return (
+    <div className="admin-container">
+      <div className="header">
+        <h1>Tapmall Admin Dashboard</h1>
+        <button className="btn-logout" onClick={() => setLoggedIn(false)}>Logout</button>
+      </div>
+      
+      <div className="stats-grid">
+        <div className="stat-card">
+          <h3>Total Users</h3>
+          <div className="value">{stats.totalUsers}</div>
+        </div>
+        <div className="stat-card">
+          <h3>Total Products</h3>
+          <div className="value">{stats.totalProducts}</div>
+        </div>
+        <div className="stat-card">
+          <h3>Total Orders</h3>
+          <div className="value">{stats.totalOrders}</div>
+        </div>
+      </div>
+
+      <div className="table-container">
+        <h2>Recent Users</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map(u => (
+              <tr key={u.id}>
+                <td>{u.id.substring(0, 8)}...</td>
+                <td>{u.email}</td>
+                <td>{u.role}</td>
+                <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [products, setProducts] = useState<any[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
   
-  // Cart state
+  const [email, setEmail] = useState('');
+  
+  const [products, setProducts] = useState<any[]>([]);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && !isAdmin) {
       fetch('/api/products')
         .then(res => res.json())
         .then(data => setProducts(data))
@@ -18,7 +85,7 @@ function App() {
         
       fetchCart();
     }
-  }, [loggedIn]);
+  }, [loggedIn, isAdmin]);
 
   const fetchCart = () => {
     fetch('/api/cart')
@@ -28,6 +95,11 @@ function App() {
   };
 
   const handleAuth = () => {
+    if (email === 'admin@tapmall.com') {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
     setLoggedIn(true);
   };
 
@@ -53,6 +125,10 @@ function App() {
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
   if (loggedIn) {
+    if (isAdmin) {
+      return <AdminDashboard setLoggedIn={setLoggedIn} />;
+    }
+
     return (
       <div className="home-container">
         <div className="header">
@@ -129,7 +205,12 @@ function App() {
         <h1>{isLogin ? 'Login to Tapmall' : 'Register for Tapmall'}</h1>
         <div className="form-group">
           <label>Email</label>
-          <input type="email" placeholder="Enter your email" />
+          <input 
+            type="email" 
+            placeholder="Enter your email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="form-group">
           <label>Password</label>

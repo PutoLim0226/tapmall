@@ -313,5 +313,83 @@ body {
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.5);
-  z-index: 999;
+}
+
+.admin-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    h1 {
+      color: variables.$primary-color;
+      font-size: 28px;
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+
+    .stat-card {
+      background: variables.$white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      text-align: center;
+
+      h3 {
+        color: variables.$text-secondary;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      .value {
+        font-size: 36px;
+        font-weight: bold;
+        color: variables.$text-primary;
+      }
+    }
+  }
+
+  .table-container {
+    background: variables.$white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+
+    h2 {
+      padding: 20px;
+      border-bottom: 1px solid variables.$border-color;
+      font-size: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 16px 20px;
+        text-align: left;
+        border-bottom: 1px solid variables.$border-color;
+      }
+
+      th {
+        background: #f8f9fa;
+        color: variables.$text-secondary;
+        font-weight: 600;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
 }
