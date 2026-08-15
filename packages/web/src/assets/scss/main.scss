@@ -1,9 +1,11 @@
 // Variables
-$primary-color: #ee4d2d; // Shopee Orange
-$background-color: #f5f5f5;
-$text-primary: #222222;
+$primary-color: #D4AF37; // Premium Gold
+$primary-hover: #F3CA40; // Brighter Gold
+$header-bg: #121212;     // Deep Black
+$background-color: #f9f9f9;
+$text-primary: #121212;
 $text-secondary: rgba(0,0,0,.54);
-$border-color: #e8e8e8;
+$border-color: #e5e5e5;
 $white: #ffffff;
 $shopee-header-height: 119px;
 
@@ -39,8 +41,9 @@ ul {
    HEADER
    ========================================= */
 .shopee-header {
-  background: linear-gradient(-180deg,#f53d2d,#f63);
+  background: $header-bg;
   color: $white;
+  border-bottom: 2px solid $primary-color;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -127,7 +130,7 @@ ul {
       button {
         background: $primary-color;
         border: none;
-        color: $white;
+        color: $header-bg;
         padding: 0 20px;
         height: 34px;
         border-radius: 2px;
@@ -135,7 +138,7 @@ ul {
         font-weight: bold;
         
         &:hover {
-          background: #e34120;
+          background: $primary-hover;
         }
       }
     }
@@ -332,8 +335,8 @@ ul {
         position: absolute;
         top: 5px;
         left: -3px;
-        background: #d0011b;
-        color: $white;
+        background: $header-bg;
+        color: $primary-color;
         font-size: 10px;
         padding: 2px 4px;
         font-weight: bold;
@@ -347,7 +350,7 @@ ul {
           bottom: -3px;
           border-width: 3px 3px 0 0;
           border-style: solid;
-          border-color: #9a0013 transparent transparent transparent;
+          border-color: #000000 transparent transparent transparent;
         }
       }
     }
@@ -398,7 +401,8 @@ ul {
       left: -1px;
       right: -1px;
       background: $primary-color;
-      color: $white;
+      color: $header-bg;
+      font-weight: bold;
       border: none;
       padding: 8px;
       text-align: center;
@@ -408,7 +412,7 @@ ul {
       border-radius: 0 0 2px 2px;
       
       &:hover {
-        background: #e34120;
+        background: $primary-hover;
       }
     }
   }
@@ -466,7 +470,7 @@ ul {
     width: 100%;
     padding: 12px;
     background: $primary-color;
-    color: $white;
+    color: $header-bg;
     border: none;
     border-radius: 2px;
     font-weight: bold;
@@ -475,19 +479,21 @@ ul {
     margin-top: 8px;
 
     &:hover {
-      background: #e34120;
+      background: $primary-hover;
     }
   }
 
   .toggle-text {
     margin-top: 16px;
     text-align: center;
-    color: #0055AA;
+    color: $header-bg;
+    font-weight: 500;
     cursor: pointer;
     font-size: 14px;
 
     &:hover {
       text-decoration: underline;
+      color: $primary-color;
     }
   }
 }
@@ -613,7 +619,7 @@ ul {
       width: 100%;
       padding: 14px;
       background: $primary-color;
-      color: $white;
+      color: $header-bg;
       border: none;
       border-radius: 2px;
       font-weight: bold;
@@ -621,7 +627,7 @@ ul {
       font-size: 16px;
       
       &:hover {
-        background: #e34120;
+        background: $primary-hover;
       }
     }
   }
