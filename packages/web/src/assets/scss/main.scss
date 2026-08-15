@@ -86,3 +86,106 @@ body {
     }
   }
 }
+
+.home-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    h1 {
+      color: variables.$primary-color;
+      font-size: 28px;
+    }
+    
+    .btn-logout {
+      background: none;
+      border: 1px solid variables.$border-color;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+
+    .product-card {
+      background: variables.$white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      }
+
+      .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .product-info {
+        padding: 16px;
+
+        h3 {
+          font-size: 18px;
+          margin-bottom: 8px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .store-name {
+          font-size: 13px;
+          color: variables.$text-secondary;
+          margin-bottom: 12px;
+        }
+
+        .price-stock {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          
+          .price {
+            color: variables.$primary-color;
+            font-size: 20px;
+            font-weight: bold;
+          }
+          .stock {
+            font-size: 13px;
+            color: variables.$text-secondary;
+          }
+        }
+        
+        .btn-add-cart {
+          margin-top: 16px;
+          width: 100%;
+          padding: 10px;
+          background: variables.$primary-color;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+          &:hover {
+            background: darken(#f94f2f, 10%);
+          }
+        }
+      }
+    }
+  }
+}
