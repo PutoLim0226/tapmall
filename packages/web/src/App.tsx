@@ -5,6 +5,7 @@ import { AuthModal } from './components/AuthModal';
 import { CartSidebar } from './components/CartSidebar';
 import { CategorySidebar } from './components/CategorySidebar';
 import { Header } from './components/Header';
+import { ProductModal } from './components/ProductModal';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [email, setEmail] = useState(localStorage.getItem('email') || '');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedProductForModal, setSelectedProductForModal] = useState<any | null>(null);
   
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -78,7 +80,7 @@ function App() {
     setIsCartOpen(true);
   };
 
-  const addToCart = (productId: string) => {
+  const addToCart = (productId: string, quantity: number = 1) => {
     if (!loggedIn) {
       setIsAuthModalOpen(true);
       return;
@@ -89,7 +91,7 @@ function App() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ productId, quantity: 1 })
+      body: JSON.stringify({ productId, quantity })
     })
       .then(() => {
         fetchCart();
@@ -134,8 +136,6 @@ function App() {
   if (loggedIn && email === 'admin@tapmall.com') {
     return <AdminDashboard setLoggedIn={handleLogout as any} />;
   }
-
-  const filteredProducts = products;
 
   return (
     <div className="shopee-layout">
@@ -187,8 +187,8 @@ function App() {
         <section className="daily-discover">
           <div className="section-title">{t('Daily Discover')}</div>
           <div className="product-grid">
-            {filteredProducts.map((prod: any) => (
-              <div key={prod.id} className="product-card" onClick={() => addToCart(prod.id)}>
+            {products.map(prod => (
+              <div key={prod.id} className="product-card" onClick={() => setSelectedProductForModal(prod)}>
                 <div className="image-wrapper">
                   <div className="mall-tag">Mall</div>
                   <img src={prod.imageUrl || 'https://via.placeholder.com/180'} alt={prod.name} />
@@ -200,7 +200,12 @@ function App() {
                     <span className="sales">{prod.stock} {t('available')}</span>
                   </div>
                 </div>
-                <button className="btn-add-cart-hover">{t('Add to Cart')}</button>
+                <button 
+                  className="btn-add-cart-hover" 
+                  onClick={(e) => { e.stopPropagation(); addToCart(prod.id); }}
+                >
+                  {t('Add to Cart')}
+                </button>
               </div>
             ))}
           </div>
@@ -228,6 +233,13 @@ function App() {
         onClose={() => setIsAuthModalOpen(false)}
         initialIsLogin={isLoginModal}
         onSuccess={handleAuthSuccess}
+      />
+
+      <ProductModal
+        isOpen={!!selectedProductForModal}
+        onClose={() => setSelectedProductForModal(null)}
+        product={selectedProductForModal}
+        onAddToCart={addToCart}
       />
     </div>
   );
