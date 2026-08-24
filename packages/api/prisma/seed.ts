@@ -8,6 +8,7 @@ async function main() {
   console.log('Start seeding...');
   
   // Clear DB
+  await prisma.cartItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.product.deleteMany();
   await prisma.store.deleteMany();
@@ -35,6 +36,12 @@ async function main() {
     }
   });
 
+  // Create Categories
+  const categoryNames = ['Electronics', 'Clothing', 'Home', 'Toys'];
+  const categories = await Promise.all(
+    categoryNames.map(name => prisma.category.create({ data: { name, description: `Category for ${name}` } }))
+  );
+
   // Create Products with Network Images
   const productsToCreate = 12;
   for (let i = 0; i < productsToCreate; i++) {
@@ -45,7 +52,8 @@ async function main() {
         price: parseFloat(faker.commerce.price()),
         stock: faker.number.int({ min: 10, max: 100 }),
         imageUrl: `https://picsum.photos/seed/${faker.string.uuid()}/800/600`,
-        storeId: store.id
+        storeId: store.id,
+        categoryId: categories[i % categories.length].id
       }
     });
   }

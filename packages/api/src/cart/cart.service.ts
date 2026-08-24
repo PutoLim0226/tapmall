@@ -5,17 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class CartService {
   constructor(private prisma: PrismaService) {}
 
-  async getBuyerId() {
-    // Demo mode: select the seeded buyer
-    const buyer = await this.prisma.user.findFirst({
-      where: { role: 'BUYER' }
-    });
-    if (!buyer) throw new Error("No buyer found in DB.");
-    return buyer.id;
-  }
-
-  async getCart() {
-    const userId = await this.getBuyerId();
+  async getCart(userId: string) {
     return this.prisma.cartItem.findMany({
       where: { userId },
       include: { product: true },
@@ -23,8 +13,7 @@ export class CartService {
     });
   }
 
-  async addToCart(productId: string, quantity: number = 1) {
-    const userId = await this.getBuyerId();
+  async addToCart(userId: string, productId: string, quantity: number = 1) {
     const existingItem = await this.prisma.cartItem.findFirst({
       where: { userId, productId }
     });
@@ -41,9 +30,9 @@ export class CartService {
     });
   }
 
-  async removeFromCart(itemId: string) {
+  async removeFromCart(userId: string, itemId: string) {
     return this.prisma.cartItem.delete({
-      where: { id: itemId }
+      where: { id: itemId, userId }
     });
   }
 }
