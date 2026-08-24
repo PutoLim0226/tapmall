@@ -845,3 +845,115 @@ ul {
     grid-template-columns: repeat(3, 1fr) !important;
   }
 }
+
+/* =========================================
+   CUSTOM COMPONENTS (DROPDOWN & SIDEBAR)
+   ========================================= */
+
+/* Language Dropdown */
+.language-dropdown {
+  position: relative;
+  
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+    
+    .chevron {
+      transition: transform 0.2s;
+      &.open { transform: rotate(180deg); }
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: $white;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    min-width: 120px;
+    z-index: 101;
+    overflow: hidden;
+
+    li {
+      padding: 10px 15px;
+      color: $text-primary;
+      cursor: pointer;
+      font-size: 14px;
+      
+      &:hover {
+        background: #f8f8f8;
+        color: $primary-color;
+      }
+      
+      &.active {
+        color: $primary-color;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+/* Logo Section & Burger Menu */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .burger-menu {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    opacity: 0.9;
+    
+    &:hover { opacity: 1; }
+  }
+}
+
+/* Category Sidebar */
+.category-menu-sidebar {
+  right: auto;
+  left: -400px;
+  box-shadow: 4px 0 12px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
+
+  &.open {
+    left: 0;
+    right: auto;
+  }
+
+  .menu-items {
+    display: flex;
+    flex-direction: column;
+
+    .menu-item {
+      padding: 16px 20px;
+      font-size: 16px;
+      color: $text-primary;
+      cursor: pointer;
+      border-bottom: 1px solid $border-color;
+      
+      &:hover {
+        color: $primary-color;
+        background: #fafafa;
+      }
+      
+      &.active {
+        color: $primary-color;
+        font-weight: bold;
+        background: #fff8e1; /* very light primary tint */
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .category-menu-sidebar {
+    left: -100% !important;
+    &.open { left: 0 !important; }
+  }
+}

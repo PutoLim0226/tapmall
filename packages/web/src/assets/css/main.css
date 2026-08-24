@@ -751,5 +751,108 @@ ul {
     grid-template-columns: repeat(3, 1fr) !important;
   }
 }
+/* =========================================
+   CUSTOM COMPONENTS (DROPDOWN & SIDEBAR)
+   ========================================= */
+/* Language Dropdown */
+.language-dropdown {
+  position: relative;
+}
+.language-dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.language-dropdown .dropdown-toggle .chevron {
+  transition: transform 0.2s;
+}
+.language-dropdown .dropdown-toggle .chevron.open {
+  transform: rotate(180deg);
+}
+.language-dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
+  z-index: 101;
+  overflow: hidden;
+}
+.language-dropdown .dropdown-menu li {
+  padding: 10px 15px;
+  color: #121212;
+  cursor: pointer;
+  font-size: 14px;
+}
+.language-dropdown .dropdown-menu li:hover {
+  background: #f8f8f8;
+  color: #D4AF37;
+}
+.language-dropdown .dropdown-menu li.active {
+  color: #D4AF37;
+  font-weight: bold;
+}
+
+/* Logo Section & Burger Menu */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo-section .burger-menu {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 0.9;
+}
+.logo-section .burger-menu:hover {
+  opacity: 1;
+}
+
+/* Category Sidebar */
+.category-menu-sidebar {
+  right: auto;
+  left: -400px;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+}
+.category-menu-sidebar.open {
+  left: 0;
+  right: auto;
+}
+.category-menu-sidebar .menu-items {
+  display: flex;
+  flex-direction: column;
+}
+.category-menu-sidebar .menu-items .menu-item {
+  padding: 16px 20px;
+  font-size: 16px;
+  color: #121212;
+  cursor: pointer;
+  border-bottom: 1px solid #e5e5e5;
+}
+.category-menu-sidebar .menu-items .menu-item:hover {
+  color: #D4AF37;
+  background: #fafafa;
+}
+.category-menu-sidebar .menu-items .menu-item.active {
+  color: #D4AF37;
+  font-weight: bold;
+  background: #fff8e1; /* very light primary tint */
+}
+
+@media (max-width: 768px) {
+  .category-menu-sidebar {
+    left: -100% !important;
+  }
+  .category-menu-sidebar.open {
+    left: 0 !important;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */

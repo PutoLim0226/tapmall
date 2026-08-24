@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AuthModal } from './components/AuthModal';
 import { CartSidebar } from './components/CartSidebar';
+import { CategorySidebar } from './components/CategorySidebar';
 import { Header } from './components/Header';
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [email, setEmail] = useState(localStorage.getItem('email') || '');
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -121,6 +123,7 @@ function App() {
         onLogout={handleLogout}
         onLoginClick={() => { setIsLoginModal(true); setIsAuthModalOpen(true); }}
         onSignUpClick={() => { setIsLoginModal(false); setIsAuthModalOpen(true); }}
+        onMenuClick={() => setIsMenuOpen(true)}
       />
 
       <main className="main-content">
@@ -187,6 +190,14 @@ function App() {
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onRemove={removeFromCart}
+      />
+
+      <CategorySidebar 
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
       />
 
       <AuthModal 
