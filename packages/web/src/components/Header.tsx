@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { LanguageDropdown } from './LanguageDropdown';
+import { CurrencyDropdown } from './CurrencyDropdown';
 
 export function Header({
   loggedIn,
@@ -9,7 +10,8 @@ export function Header({
   onLogout,
   onLoginClick,
   onSignUpClick,
-  onMenuClick
+  onMenuClick,
+  onSellerCentreClick
 }: {
   loggedIn: boolean;
   email: string;
@@ -19,6 +21,7 @@ export function Header({
   onLoginClick: () => void;
   onSignUpClick: () => void;
   onMenuClick: () => void;
+  onSellerCentreClick?: () => void;
 }) {
   const { t } = useTranslation();
 
@@ -27,13 +30,14 @@ export function Header({
       <div className="header-container">
         <div className="top-navbar">
           <div className="nav-links">
-            <a href="#">{t('Seller Centre')}</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); onSellerCentreClick?.(); }}>{t('Seller Centre')}</a>
             <span>|</span>
             <a href="#">{t('Download')}</a>
             <span>|</span>
             <a href="#">{t('Follow us on')}</a>
           </div>
           <div className="user-links">
+            <CurrencyDropdown />
             <LanguageDropdown />
             <a href="#">{t('Help')}</a>
             {loggedIn ? (

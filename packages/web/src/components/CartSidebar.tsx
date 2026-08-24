@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export function CartSidebar({
   isOpen,
@@ -14,6 +15,7 @@ export function CartSidebar({
   onCheckout: () => void;
 }) {
   const { t } = useTranslation();
+  const { formatPrice } = useCurrency();
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
   return (
@@ -37,7 +39,7 @@ export function CartSidebar({
                 <img src={item.product.imageUrl} alt={item.product.name} className="item-image" />
                 <div className="item-details">
                   <h4>{item.product.name}</h4>
-                  <div className="item-price">${item.product.price} x {item.quantity}</div>
+                  <div className="item-price">{formatPrice(item.product.price)} x {item.quantity}</div>
                   <button className="btn-remove" onClick={() => onRemove(item.id)}>{t('Remove')}</button>
                 </div>
               </div>
@@ -49,7 +51,7 @@ export function CartSidebar({
           <div className="cart-footer">
             <div className="total">
               <span>{t('Total')}:</span>
-              <span>${cartTotal.toFixed(2)}</span>
+              <span>{formatPrice(cartTotal)}</span>
             </div>
             <button className="btn-checkout" onClick={onCheckout}>{t('Checkout')}</button>
           </div>

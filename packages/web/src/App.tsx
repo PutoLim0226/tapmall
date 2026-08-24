@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AdminDashboard } from './components/AdminDashboard';
+import { SellerDashboard } from './components/SellerDashboard';
 import { AuthModal } from './components/AuthModal';
 import { CartSidebar } from './components/CartSidebar';
 import { CategorySidebar } from './components/CategorySidebar';
 import { Header } from './components/Header';
 import { ProductModal } from './components/ProductModal';
+import { useCurrency } from './contexts/CurrencyContext';
 import './App.css';
 
 function App() {
   const { t } = useTranslation();
+  const { formatPrice } = useCurrency();
   const [isLoginModal, setIsLoginModal] = useState(true);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [email, setEmail] = useState(localStorage.getItem('email') || '');
@@ -23,6 +26,7 @@ function App() {
   
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [showSellerDashboard, setShowSellerDashboard] = useState(false);
 
   const loggedIn = !!token;
   const isAdmin = email === 'admin@tapmall.com';
@@ -137,6 +141,10 @@ function App() {
     return <AdminDashboard setLoggedIn={handleLogout as any} />;
   }
 
+  if (loggedIn && showSellerDashboard) {
+    return <SellerDashboard onClose={() => setShowSellerDashboard(false)} />;
+  }
+
   return (
     <div className="shopee-layout">
       <Header 
@@ -148,6 +156,7 @@ function App() {
         onLoginClick={() => { setIsLoginModal(true); setIsAuthModalOpen(true); }}
         onSignUpClick={() => { setIsLoginModal(false); setIsAuthModalOpen(true); }}
         onMenuClick={() => setIsMenuOpen(true)}
+        onSellerCentreClick={() => setShowSellerDashboard(true)}
       />
 
       <main className="main-content">
@@ -196,7 +205,7 @@ function App() {
                 <div className="product-info">
                   <div className="name">{prod.name}</div>
                   <div className="bottom-row">
-                    <span className="price">USD {prod.price}</span>
+                    <span className="price">{formatPrice(prod.price)}</span>
                     <span className="sales">{prod.stock} {t('available')}</span>
                   </div>
                 </div>

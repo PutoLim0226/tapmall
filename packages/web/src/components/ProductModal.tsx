@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../contexts/CurrencyContext';
 
 export function ProductModal({
   isOpen,
@@ -13,6 +14,7 @@ export function ProductModal({
   onAddToCart: (productId: string, quantity: number) => void;
 }) {
   const { t } = useTranslation();
+  const { formatPrice } = useCurrency();
   const [quantity, setQuantity] = useState(1);
 
   // Reset quantity when a new product is selected
@@ -34,7 +36,7 @@ export function ProductModal({
           </div>
           <div className="product-info-panel">
             <h1 className="product-name">{product.name}</h1>
-            <div className="product-price">USD {product.price}</div>
+            <div className="product-price">{formatPrice(product.price)}</div>
             
             <div className="product-description">
               <p>{product.description || t('No description available.')}</p>
