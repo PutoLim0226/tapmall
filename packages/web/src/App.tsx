@@ -109,9 +109,33 @@ function App() {
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  if (loggedIn && isAdmin) {
+  const handleCheckout = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch('/api/orders/checkout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (res.ok) {
+        alert(t('Order placed successfully!'));
+        setCartItems([]);
+        setIsCartOpen(false);
+      } else {
+        alert('Failed to checkout');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to checkout');
+    }
+  };
+
+  if (loggedIn && email === 'admin@tapmall.com') {
     return <AdminDashboard setLoggedIn={handleLogout as any} />;
   }
+
+  const filteredProducts = products;
 
   return (
     <div className="shopee-layout">
@@ -163,22 +187,20 @@ function App() {
         <section className="daily-discover">
           <div className="section-title">{t('Daily Discover')}</div>
           <div className="product-grid">
-            {products.map(product => (
-              <div key={product.id} className="product-card" onClick={() => addToCart(product.id)}>
+            {filteredProducts.map((prod: any) => (
+              <div key={prod.id} className="product-card" onClick={() => addToCart(prod.id)}>
                 <div className="image-wrapper">
-                  <img src={product.imageUrl} alt={product.name} />
                   <div className="mall-tag">Mall</div>
+                  <img src={prod.imageUrl || 'https://via.placeholder.com/180'} alt={prod.name} />
                 </div>
                 <div className="product-info">
-                  <div className="name">{product.name}</div>
+                  <div className="name">{prod.name}</div>
                   <div className="bottom-row">
-                    <span className="price">${product.price}</span>
-                    <span className="sales">{product.stock} {t('sold')}</span>
+                    <span className="price">USD {prod.price}</span>
+                    <span className="sales">{prod.stock} {t('available')}</span>
                   </div>
                 </div>
-                <button className="btn-add-cart-hover" onClick={(e) => { e.stopPropagation(); addToCart(product.id); }}>
-                  {t('Add To Cart')}
-                </button>
+                <button className="btn-add-cart-hover">{t('Add to Cart')}</button>
               </div>
             ))}
           </div>
@@ -190,6 +212,7 @@ function App() {
         onClose={() => setIsCartOpen(false)}
         cartItems={cartItems}
         onRemove={removeFromCart}
+        onCheckout={handleCheckout}
       />
 
       <CategorySidebar 

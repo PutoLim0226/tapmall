@@ -4,12 +4,14 @@ export function CartSidebar({
   isOpen,
   onClose,
   cartItems,
-  onRemove
+  onRemove,
+  onCheckout
 }: {
   isOpen: boolean;
   onClose: () => void;
   cartItems: any[];
   onRemove: (itemId: string) => void;
+  onCheckout: () => void;
 }) {
   const { t } = useTranslation();
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
@@ -49,7 +51,7 @@ export function CartSidebar({
               <span>{t('Total')}:</span>
               <span>${cartTotal.toFixed(2)}</span>
             </div>
-            <button className="btn-checkout">{t('Checkout')}</button>
+            <button className="btn-checkout" onClick={onCheckout}>{t('Checkout')}</button>
           </div>
         )}
       </div>
