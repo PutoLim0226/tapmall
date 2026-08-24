@@ -19,14 +19,6 @@ export function Header({
 }) {
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = () => {
-    if (i18n.language === 'en') i18n.changeLanguage('zh-TW');
-    else if (i18n.language === 'zh-TW') i18n.changeLanguage('zh-CN');
-    else i18n.changeLanguage('en');
-  };
-
-  const currentLang = i18n.language === 'en' ? 'English' : (i18n.language === 'zh-TW' ? '繁體中文' : '简体中文');
-
   return (
     <header className="shopee-header">
       <div className="header-container">
@@ -39,10 +31,18 @@ export function Header({
             <a href="#">{t('Follow us on')}</a>
           </div>
           <div className="user-links">
-            <span style={{ display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }} onClick={changeLanguage}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13z" fill="white"/><path d="M8 2.5a4 4 0 0 0-3.5 2.1c.3.1.6.3.8.5A3 3 0 0 1 8 3.5a3 3 0 0 1 2.7 1.6c.2-.2.5-.4.8-.5A4 4 0 0 0 8 2.5z" fill="white"/></svg>
-              {currentLang}
-            </span>
+              <select 
+                value={i18n.language} 
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+                style={{ background: 'transparent', color: 'white', border: 'none', outline: 'none', cursor: 'pointer', appearance: 'none', WebkitAppearance: 'none' }}
+              >
+                <option value="en" style={{ color: 'black' }}>English</option>
+                <option value="zh-TW" style={{ color: 'black' }}>繁體中文</option>
+                <option value="zh-CN" style={{ color: 'black' }}>简体中文</option>
+              </select>
+            </div>
             <a href="#">{t('Help')}</a>
             {loggedIn ? (
               <>
