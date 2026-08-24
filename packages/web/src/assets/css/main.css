@@ -648,4 +648,108 @@ ul {
   border-bottom: none;
 }
 
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+/* Tablets & Mobile (max-width: 992px) */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .category-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Header Mobile */
+  .top-navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  .top-navbar .nav-links {
+    display: none; /* Hide top nav links to save space */
+  }
+  .main-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 0;
+  }
+  .main-header .logo {
+    font-size: 24px;
+  }
+  .main-header .logo svg {
+    width: 36px;
+    height: 36px;
+  }
+  .main-header .search-section {
+    width: 100%;
+  }
+  .main-header .search-section .search-tags {
+    display: none; /* Hide tags on mobile */
+  }
+  .main-header .cart-icon {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+  }
+  /* Banners Mobile */
+  .banners-section {
+    flex-direction: column;
+  }
+  .banners-section .main-banner {
+    height: 150px;
+  }
+  .banners-section .side-banners {
+    flex-direction: row;
+  }
+  .banners-section .side-banners .side-banner {
+    height: 100px;
+  }
+  /* Grid Layouts Mobile */
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Modals & Sidebar Mobile */
+  .auth-card {
+    width: 90% !important;
+    padding: 20px !important;
+  }
+  .cart-sidebar {
+    width: 100% !important;
+    right: -100% !important;
+  }
+  .cart-sidebar.open {
+    right: 0 !important;
+  }
+  /* Admin Dashboard Mobile */
+  .admin-container {
+    padding: 20px 10px;
+  }
+  .admin-container .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .admin-container .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-container .table-container {
+    overflow-x: auto;
+  }
+  .admin-container .table-container table {
+    min-width: 600px; /* Enable scroll on table */
+  }
+}
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
 /*# sourceMappingURL=main.css.map */
